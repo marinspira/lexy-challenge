@@ -1,12 +1,10 @@
 import styles from "../styles/Interview.module.css";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import CloseIcon from "@/components/buttons/icons/CloseIcon";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import AccountCard from "@/components/accountCard/AccountCard";
 import { useState } from "react";
-import Square from "@/components/square/square";
+import Square from "@/components/square/Square";
 
 type IPlatform = "facebook" | "instagram" | "linkedin";
 
@@ -76,9 +74,9 @@ const Interview = ({ }) => {
   return (
     <div className={styles["interview-main-container"]}>
       <div className={styles["interview-boxes-container"]}>
-        <Square color='secondary'/>
-        <Square color='primary'/>
-        <Square color='success'/>
+        <Square id={1} color='secondary'/>
+        <Square id={2} color='primary'/>
+        <Square id={3} color='success'/>
       </div>
       <div>
         <AccountCard

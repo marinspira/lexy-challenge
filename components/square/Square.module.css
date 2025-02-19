@@ -1,4 +1,14 @@
-.interview-box-container{
-    display: block;
-    gap: 30px;
-  }
+.interview-box-container {
+  display: block;
+  gap: 30px;
+}
+
+.interview-button-container {
+  display: flex;
+  width: 300px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  height: 100%; 
+}
