@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import AccountCard from "@/components/accountCard/AccountCard";
 import { useState } from "react";
+import Square from "@/components/square/square";
 
 type IPlatform = "facebook" | "instagram" | "linkedin";
 
@@ -17,7 +18,7 @@ interface IProfile {
   tastes: any;
 }
 
-const Interview = ({ props }) => {
+const Interview = ({ }) => {
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -75,54 +76,9 @@ const Interview = ({ props }) => {
   return (
     <div className={styles["interview-main-container"]}>
       <div className={styles["interview-boxes-container"]}>
-        <div className={styles["interview-box-container"]}>
-          <Box
-            sx={{
-              width: 300,
-              height: 300,
-              backgroundColor: "secondary.dark",
-              "&:hover": {
-                backgroundColor: "secondary.main",
-                opacity: [0.9, 0.8, 0.7],
-              },
-            }}
-          />
-          <Button variant="contained" startIcon={<CloseIcon />}>
-            Delete
-          </Button>
-        </div>
-        <div className={styles["interview-box-container"]}>
-          <Box
-            sx={{
-              width: 300,
-              height: 300,
-              backgroundColor: "primary.dark",
-              "&:hover": {
-                backgroundColor: "primary.main",
-                opacity: [0.9, 0.8, 0.7],
-              },
-            }}
-          />
-          <Button variant="contained" startIcon={<CloseIcon />}>
-            Delete
-          </Button>
-        </div>
-        <div className={styles["interview-box-container"]}>
-          <Box
-            sx={{
-              width: 300,
-              height: 300,
-              backgroundColor: "success.dark",
-              "&:hover": {
-                backgroundColor: "success.main",
-                opacity: [0.9, 0.8, 0.7],
-              },
-            }}
-          />
-          <Button variant="contained" startIcon={<CloseIcon />}>
-            Delete
-          </Button>
-        </div>
+        <Square color='secondary'/>
+        <Square color='primary'/>
+        <Square color='success'/>
       </div>
       <div>
         <AccountCard
