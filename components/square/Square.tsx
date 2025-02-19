@@ -8,10 +8,9 @@ type Colors = 'primary' | 'secondary' | 'success';
 
 interface SquareProps {
     color: Colors;
-    id: number;
 }
 
-const Square: React.FC<SquareProps> = ({ color, id }) => {
+const Square: React.FC<SquareProps> = ({ color }) => {
     const [deleted, setDeleted] = useState(false);
 
     function handleSquareVisibility() {

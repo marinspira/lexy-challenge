@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import AccountCard from "@/components/accountCard/AccountCard";
 import { useState } from "react";
 import Square from "@/components/square/Square";
+import Button from "@mui/material/Button";
+import Link from "next/link";
 
 type IPlatform = "facebook" | "instagram" | "linkedin";
 
@@ -74,10 +76,17 @@ const Interview = ({ }) => {
   return (
     <div className={styles["interview-main-container"]}>
       <div className={styles["interview-boxes-container"]}>
-        <Square id={1} color='secondary'/>
-        <Square id={2} color='primary'/>
-        <Square id={3} color='success'/>
+        <Square color='secondary' />
+        <Square color='primary' />
+        <Square color='success' />
       </div>
+
+      <Link href='/squares'>
+        <Button variant="contained">
+          Square with Maria's favorite color
+        </Button>
+      </Link>
+
       <div>
         <AccountCard
           profiles={profiles}
@@ -86,6 +95,7 @@ const Interview = ({ }) => {
           setIsProfileModalOpen={setIsProfileModalOpen}
         />
       </div>
+
       <Modal
         open={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
