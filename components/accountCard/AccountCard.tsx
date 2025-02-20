@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, TextField, Button, Avatar, Box, Modal, Typography, IconButton } from "@mui/material";
+import { Card, TextField, Button, Avatar, Box, Modal, Typography, IconButton, FormControlLabel, Radio, RadioGroup, FormLabel } from "@mui/material";
 import styles from "./AccountCard.module.css";
 
 type IPlatform = "facebook" | "instagram" | "linkedin";
@@ -31,7 +31,7 @@ const AccountCard: React.FC<IAccountCard> = ({
   setIsProfileModalOpen,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [integrations, setIntegrations] = useState<IProfile[]>([]);
+  const [allProfiles, setAllProfiles] = useState<IProfile[]>([]);
 
   const [newProfile, setNewProfile] = useState<IProfile>({
     id: "",
@@ -42,7 +42,7 @@ const AccountCard: React.FC<IAccountCard> = ({
   });
 
   useEffect(() => {
-    setIntegrations(profiles);
+    setAllProfiles(profiles);
   }, [profiles]);
 
   const handleInputChange = (field: keyof IProfile, value: string) => {
@@ -87,7 +87,7 @@ const AccountCard: React.FC<IAccountCard> = ({
 
   const handleAddProfile = () => {
     if (!newProfile.username.trim()) return;
-    setIntegrations([...integrations, { ...newProfile, id: Date.now().toString() }]);
+    setAllProfiles([...allProfiles, { ...newProfile, id: Date.now().toString() }]);
     setIsModalOpen(false);
     setNewProfile({
       id: "",
@@ -101,7 +101,7 @@ const AccountCard: React.FC<IAccountCard> = ({
   return (
     <Card>
       <div className={styles["card"]}>
-        {integrations.map((item, index) => (
+        {allProfiles.map((item, index) => (
           <Button key={index} onClick={() => setIsProfileModalOpen(true)}>
             <Avatar alt={item.username} src={item.avatar} />
             {item.username}
@@ -139,6 +139,7 @@ const AccountCard: React.FC<IAccountCard> = ({
             p: 4,
             borderRadius: 2,
             overflow: "auto",
+            maxHeight: '90vh'
           }}
         >
           <Typography id="modal-title" variant="h6" component="h2">
@@ -158,6 +159,16 @@ const AccountCard: React.FC<IAccountCard> = ({
             onChange={(e) => handleInputChange("avatar", e.target.value)}
             margin="normal"
           />
+          <FormLabel component="legend">Platform</FormLabel>
+          <RadioGroup
+            row
+            value={newProfile.platform}
+            onChange={(e) => handleInputChange("platform", e.target.value as IPlatform)}
+          >
+            <FormControlLabel value="facebook" control={<Radio />} label="Facebook" />
+            <FormControlLabel value="instagram" control={<Radio />} label="Instagram" />
+            <FormControlLabel value="linkedin" control={<Radio />} label="LinkedIn" />
+          </RadioGroup>
 
           <Typography variant="h6" sx={{ mt: 2 }}>
             Tastes
