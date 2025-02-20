@@ -7,15 +7,22 @@ import { useState } from "react";
 import Square from "@/components/square/Square";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import { Avatar } from "@mui/material";
+import ClosePopupButton from "@/components/closePopupButton/ClosePopupButton";
 
 type IPlatform = "facebook" | "instagram" | "linkedin";
+
+interface ITaste {
+  title: string;
+  elements: string[];
+}
 
 interface IProfile {
   id: string;
   avatar: string;
   platform: IPlatform;
   username: string;
-  tastes: any;
+  tastes: ITaste[];
 }
 
 const Interview = ({ }) => {
@@ -69,9 +76,14 @@ const Interview = ({ }) => {
     ],
   };
 
-  const [profiles, setProfiles] = useState([profile1, profile2]);
-
+  const [profiles] = useState<IProfile[]>([profile1, profile2]);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(null);
+
+  const handleOpenProfileModal = (profile: IProfile) => {
+    setSelectedProfile(profile);
+    setIsProfileModalOpen(true);
+  };
 
   return (
     <div className={styles["interview-main-container"]}>
@@ -93,6 +105,7 @@ const Interview = ({ }) => {
           editable={false}
           id="id-x-1"
           setIsProfileModalOpen={setIsProfileModalOpen}
+          onProfileClick={handleOpenProfileModal}
         />
       </div>
 
@@ -103,12 +116,24 @@ const Interview = ({ }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Title
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Body
-          </Typography>
+          {selectedProfile && (
+            <>
+              <ClosePopupButton handleClosePopup={() => setIsProfileModalOpen(false)} />
+              <Avatar alt={selectedProfile.username} src={selectedProfile.avatar} />
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                {selectedProfile?.username}
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <strong>Platform:</strong> {selectedProfile.platform}
+              </Typography>
+              {selectedProfile.tastes.map((taste, index) => (
+                <div key={index}>
+                  <Typography variant="subtitle1" sx={{ mt: 2 }}><strong>{taste.title}:</strong></Typography>
+                  <Typography variant="body2">{taste.elements.join(", ")}</Typography>
+                </div>
+              ))}
+            </>
+          )}
         </Box>
       </Modal>
     </div>

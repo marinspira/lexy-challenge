@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, TextField, Button, Avatar, Box, Modal, Typography, IconButton, FormControlLabel, Radio, RadioGroup, FormLabel } from "@mui/material";
 import styles from "./AccountCard.module.css";
+import ClosePopupButton from "../closePopupButton/ClosePopupButton";
 
 type IPlatform = "facebook" | "instagram" | "linkedin";
 
@@ -21,12 +22,14 @@ export interface IAccountCard {
   profiles: IProfile[];
   id: string;
   editable?: boolean;
+  onProfileClick: (profile: IProfile) => void;
   setIsProfileModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AccountCard: React.FC<IAccountCard> = ({
   profiles,
   editable,
+  onProfileClick,
   id,
   setIsProfileModalOpen,
 }) => {
@@ -101,10 +104,10 @@ const AccountCard: React.FC<IAccountCard> = ({
   return (
     <Card>
       <div className={styles["card"]}>
-        {allProfiles.map((item, index) => (
-          <Button key={index} onClick={() => setIsProfileModalOpen(true)}>
-            <Avatar alt={item.username} src={item.avatar} />
-            {item.username}
+        {allProfiles.map((profile) => (
+          <Button key={profile.id} onClick={() => onProfileClick(profile)}>
+            <Avatar alt={profile.username} src={profile.avatar} />
+            {profile.username}
           </Button>
         ))}
         {editable && (
@@ -142,6 +145,7 @@ const AccountCard: React.FC<IAccountCard> = ({
             maxHeight: '90vh'
           }}
         >
+          <ClosePopupButton handleClosePopup={() => setIsModalOpen(false)}/>
           <Typography id="modal-title" variant="h6" component="h2">
             Add New Profile
           </Typography>
